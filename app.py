@@ -2,27 +2,29 @@ import streamlit as st
 from gtts import gTTS
 import os
 
-st.set_page_config(page_title="AI 課後複習 App", layout="centered")
-st.title("📚 課後複習語音生成 App")
+# Set Streamlit page config
+st.set_page_config(page_title="EIE Institute Class Review", layout="centered")
+st.title("📚 EIE Institute Class Review")
 
-# 文字輸入
-text = st.text_area("請輸入文章或單字", height=150)
+# -------- Text input --------
+text = st.text_area("Enter your article or vocabulary here", height=150)
 
-if st.button("生成語音"):
+# -------- Generate audio --------
+if st.button("Generate Audio"):
     if not text.strip():
-        st.warning("請先輸入文字")
+        st.warning("Please enter some text first.")
     else:
         audio_file = "lesson_audio.mp3"
         tts = gTTS(text=text, lang="en")
         tts.save(audio_file)
 
-        st.success("語音生成完成！🎉")
+        st.success("Audio has been generated successfully! 🎉")
         st.audio(audio_file, format="audio/mp3")
 
-# 清理檔案
-if st.button("清理音檔"):
+# -------- Clean up --------
+if st.button("Clear Audio File"):
     if os.path.exists("lesson_audio.mp3"):
         os.remove("lesson_audio.mp3")
-        st.success("音檔已清理 ✅")
+        st.success("Audio file has been cleared ✅")
     else:
-        st.info("沒有音檔可以清理")
+        st.info("No audio file to clear.")
